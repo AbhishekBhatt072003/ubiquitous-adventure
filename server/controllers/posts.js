@@ -1,9 +1,11 @@
+import express from 'express';
+import mongoose from 'mongoose';
 import postMessage from '../models/postMessage.js'
 
 // -------------------------------------for getting posts from the database --------------------
 export const getPosts = async (req, res) => {
     try {
-        const postMessages = postMessage.find();
+        const postMessages = await postMessage.find();
         res.status(200).json(postMessages);
 
     } catch (error) {
@@ -17,7 +19,8 @@ export const createPost = async (req, res) => {
 
     const post = req.body;
 
-    const newPost = postMessage(post);
+    const newPost = new postMessage(post);
+
 
     try {
         await newPost.save();
